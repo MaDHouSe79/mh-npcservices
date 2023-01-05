@@ -5,7 +5,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'MH - NPC Services - a 5 in 1 npc services. NPC (Police/Ambulance/Mechanic/TowTruck/Taxi)'
+description 'MH - NPC Services - a 6 in 1 npc services. NPC (Police/Ambulance/Mechanic/TowTruck/Taxi/Limo)'
 author 'MaDHouSe'
 version '1.0'
 
