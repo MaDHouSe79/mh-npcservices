@@ -30,12 +30,6 @@
   <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
 </p>
 
-
-## Contributers
-<a href="https://github.com/MaDHouSe79/mh-npcservices/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=MaDHouSe79/MaDHouSe79" />
-</a>
-
 # MH-NpcServices (BETA)
 
 ### MH 5 in 1 NPC Services Script by MaDHouSe
