@@ -20,8 +20,8 @@ Config.StuckResetTimer     = 15               -- Default 15, reset stuck time.
 
 Config.UsePoliceAssist     = false            -- if true, a plice player can let a police ped drive the player to the HQ
 Config.UseAutoJail         = false            -- Default false, if you dont have police you can set this true
-Config.MinJailTime         = 120,             -- 2 min min jail time (Default: 120)
-Config.MaxJailTime         = 250,             -- 5 min max jail time (Default: 350)
+Config.MinJailTime         = 120              -- 2 min min jail time (Default: 120)
+Config.MaxJailTime         = 250              -- 5 min max jail time (Default: 350)
 
 
 Config.JobPeds = {
