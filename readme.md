@@ -32,7 +32,7 @@
 
 # MH-NpcServices (BETA)
 
-### MH 5 in 1 NPC Services Script by MaDHouSe
+### MH 6 in 1 NPC Services Script by MaDHouSe
 - NPC Police    - Transport you to police HQ jail, this with 2 agent peds with a riot vehicle.
 - NPC Ambulance - Transport you to the hospital, this with 2 ambulance peds.
 - NPC Mechanic  - Repare your vehicle on location, this with 1 mechanic ped.
