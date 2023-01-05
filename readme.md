@@ -46,6 +46,9 @@
 - NPC Taxi      - Take you where ever you want on the map.(just set a waypoint and call a taxi)
 - NPC Limo      - Take you where ever you want on the map in style .(just set a waypoint and call a limo)
 
+### Dont forget to edit the qb-smallresources/config.lua 
+- Go to resources/[qb]/qb-smallresources/config.lua look for (Config.BlacklistedVehs)
+- Set vehicles in to false so it can spawn in.
 
 ## NOTE Open Source, at least give me the credit for making this script.
 - Don't act if you created this script, you can change stuff or use stuff, i don't care.
