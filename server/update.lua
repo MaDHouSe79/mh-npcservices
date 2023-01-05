@@ -28,9 +28,7 @@ local function checkVersion(err, responseText, headers)
     end
 end
 
-if Config.CheckForUpdates then
-    Citizen.CreateThread( function()
-        resourceName = ""..GetCurrentResourceName()..""
-        PerformHttpRequest("https://raw.githubusercontent.com".."/"..user.."/"..script.."/master/version", checkVersion, "GET")
-    end)
-end
+Citizen.CreateThread( function()
+   resourceName = ""..GetCurrentResourceName()..""
+   PerformHttpRequest("https://raw.githubusercontent.com".."/"..user.."/"..script.."/master/version", checkVersion, "GET")
+end)
