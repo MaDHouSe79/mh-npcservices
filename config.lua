@@ -34,7 +34,7 @@ Config.JobPeds = {
 
 Config.Vehicles = {   -- Job Vehicles
     ['police']        = {models = {"riot"}},
-    ['ambulance']     = {models = {"20ramambo"}},
+    ['ambulance']     = {models = {"ambulance"}},
     ['mechanic']      = {models = {"flatbed", "towtruck"}},-- dont change the order, you can change the model but keep it as it is.(flatbed/towtruck)
     ['taxi']          = {models = {"taxi"}},
     ['limousine']     = {models = {"stretch", "patriot2"}},
