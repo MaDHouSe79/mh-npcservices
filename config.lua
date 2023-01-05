@@ -27,7 +27,7 @@ Config.MaxJailTime         = 250              -- 5 min max jail time (Default: 3
 Config.JobPeds = {
     ['police']        = {models = {"mp_m_fibsec_01"}},
     ['ambulance']     = {models = {"s_m_m_doctor_01"}},
-    ['mechanic']      = {models = {"S_M_M_TRUCKER_01"}},-- dont change the order, you can change the model but keep it as it is.(flatbed/towtruck)
+    ['mechanic']      = {models = {"S_M_M_TRUCKER_01"}},
     ['taxi']          = {models = {"a_m_y_stlat_01"}},
     ['limousine']     = {models = {"cs_solomon"}},
 }
