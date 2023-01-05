@@ -139,10 +139,6 @@ local function DriveToLocation(from, to)
     end
 end
 
-local function SetCooldown()
-    company.cooldown = true
-end
-
 local function DrawTxt(x, y, width, height, scale, text, r, g, b, a)
     SetTextFont(4)
     SetTextProportional(0)
@@ -493,9 +489,7 @@ end)
 
 RegisterNetEvent('mh-npcservices:client:menu', function()
     if isInJail then return end
-    if company.cooldown then return QBCore.Functions.Notify(Lang:t('notify.cooldown', {job = company.job}), "error") end
     local playerlist = {}
-
     QBCore.Functions.TriggerCallback('mh-npcservices:server:GetOnlinePlayers', function(online)
         playerlist[#playerlist + 1] = {value = GetPlayerServerId(PlayerId()), text = Lang:t('menu.for_your_self')}
         for key, v in pairs(online) do
