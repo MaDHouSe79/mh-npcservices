@@ -126,12 +126,11 @@ end)
 RegisterServerEvent('mh-npcservices:server:pay', function(company, price)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local topay = comma_value(price)
-    if Player.PlayerData.money["cash"] >= tonumber(topay) then
-        Player.Functions.RemoveMoney("cash", tonumber(topay), "pay-"..company)
+    if Player.PlayerData.money["cash"] >= price then
+        Player.Functions.RemoveMoney("cash", price, "pay-"..company)
     else
-        if Player.PlayerData.money["bank"] >= tonumber(topay) then
-            Player.Functions.RemoveMoney("bank", tonumber(topay), "pay-"..company)
+        if Player.PlayerData.money["bank"] >= price then
+            Player.Functions.RemoveMoney("bank", price, "pay-"..company)
         end
     end
 end)
