@@ -376,6 +376,7 @@ end
 local function CreateServicesVehicle(coords, heading)
     ClearAreaOfVehicles(coords, 10000, false, false, false, false, false)
     local model = SelectVehicleModel()
+    loadModel(model)
     local vehicle = CreateVehicle(model, coords, heading, true, true)
     SetEntityInvincible(vehicle, true)
     NetworkSetEntityInvisibleToNetwork(vehicle, true)
