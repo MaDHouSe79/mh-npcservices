@@ -97,10 +97,21 @@ RegisterServerEvent('mh-npcservices:server:sendService', function(callData)
     local num = nil
     if not id then id = src end
     if src == callData.targetId then num = src else num = callData.targetId end
-    if CanIPayTheBill(num, callData.job, callData.price) then
-        TriggerClientEvent("mh-npcservices:client:sendService", num, callData)
+    if not isEMSService(num) then
+        local count = QBCore.Functions.GetDutyCount(job)
+        if count >= Config.MinOnlineEMS then
+            TriggerClientEvent('QBCore:Notify', num, "Je kunt deze services niet gebruiken als er een speler in de stad is met deze job.", "error", 10000)
+        else
+            if CanIPayTheBill(num, callData.job, callData.price) then
+                TriggerClientEvent("mh-npcservices:client:sendService", num, callData)
+            else
+                TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.cant_pay',{price = callData.price}), "error", 10000)
+            end
+        end
     else
-        TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.cant_pay',{price = callData.price}), "error", 10000)
+        if isEMSService(num) then
+            TriggerClientEvent("mh-npcservices:client:sendService", num, callData)
+        end
     end
 end)
 
