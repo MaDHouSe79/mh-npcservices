@@ -544,20 +544,15 @@ RegisterNetEvent('mh-npcservices:client:menu', function()
                         call_data.price = CalculateTaxiPrice(call_data.job, from, to)
                     end
                 end
-                QBCore.Functions.TriggerCallback('mh-npcservices:server:emsOnline', function(online)
-                    if online >= Config.MinOnlineEMS then
-                        QBCore.Functions.Notify(Lang:t('notify.can_not_use_services'), "error")
-                    else
-                        QBCore.Functions.TriggerCallback("mh-npcservices:server:CanIPayTheBill", function(ICanPay)
-                            if ICanPay then
-                                CallAnimation(call_data.job)
-                                TriggerServerEvent('mh-npcservices:server:sendService', call_data)
-                            else
-                                QBCore.Functions.Notify(Lang:t('notify.cant_pay',{price = call_data.price}), "error")
-                            end
-                        end, call_data.job, call_data.price)
+                if call_data.job == 'taxi' or call_data.job == 'limousine' then
+                    if DoesBlipExist(GetFirstBlipInfoId(8)) then
+                        local x, y, z = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, GetFirstBlipInfoId(8), Citizen.ResultAsVector()))
+                        local from = GetEntityCoords(PlayerPedId())
+                        local to = vector3(x, y, z)
+                        call_data.price = CalculateTaxiPrice(call_data.job, from, to)
                     end
-                end, call_data.job)
+                end
+                TriggerServerEvent('mh-npcservices:server:sendService', call_data)
             end
         end)
     end)
