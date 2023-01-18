@@ -803,7 +803,7 @@ CreateThread(function()
 	while true do
         if LocalPlayer.state.isLoggedIn then
             if Config.AutoCallAmbulance and not company.sendNotify and not company.isCalled then
-                if QBCore.Functions.GetPlayerData().metadata['isdead'] or QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
+                if QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
                     if not company.sendNotify then
                         local call_data = {}
                         call_data.job = 'ambulance'
