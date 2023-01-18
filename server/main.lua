@@ -98,7 +98,7 @@ RegisterServerEvent('mh-npcservices:server:sendService', function(callData)
     if not id then id = src end
     if src == callData.targetId then num = src else num = callData.targetId end
     if not isEMSService(num) then
-        local count = QBCore.Functions.GetDutyCount(job)
+        local count = QBCore.Functions.GetDutyCount(callData.job)
         if count >= Config.MinOnlineEMS then
             TriggerClientEvent('QBCore:Notify', num, "Je kunt deze services niet gebruiken als er een speler in de stad is met deze job.", "error", 10000)
         else
