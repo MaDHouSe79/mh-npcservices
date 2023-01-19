@@ -119,10 +119,13 @@ RegisterServerEvent('mh-npcservices:server:leavevehicle', function(vehicle)
     for i = 0, #passengers do
         if passengers[i] then
             if passengers[i].passenger ~= nil then 
-                local fullname = QBCore.Functions.GetPlayer(passengers[i].passenger).PlayerData.charinfo.firstname ..' '.. QBCore.Functions.GetPlayer(passengers[i].passenger).PlayerData.charinfo.lastname
-                TriggerClientEvent('mh-npcservices:client:leavevehicle', passengers[i].passenger, passengers[i].vehicle)
-                TriggerClientEvent('QBCore:Notify', passengers[i].passenger, Lang:t('notify.left_vehicle'), "success")
-                passengers[i].passenger = nil
+                local Player = QBCore.Functions.GetPlayer(passengers[i].passenger)
+                if Player then
+                    local fullname = Player.PlayerData.charinfo.firstname ..' '.. Player.PlayerData.charinfo.lastname
+                    TriggerClientEvent('mh-npcservices:client:leavevehicle', passengers[i].passenger)
+                    TriggerClientEvent('QBCore:Notify', passengers[i].passenger, Lang:t('notify.left_vehicle'), "success")
+                    passengers[i].passenger = nil
+                end
             end
         end
     end
