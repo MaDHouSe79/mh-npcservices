@@ -1,5 +1,5 @@
 --[[ ===================================================== ]]--
---[[         MH Vehicle Key Item Script by MaDHouSe        ]]--
+--[[           MH NPC Services Script by MaDHouSe          ]]--
 --[[ ===================================================== ]]--
 
 local user = "MaDHouSe79"
