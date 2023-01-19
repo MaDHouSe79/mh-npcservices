@@ -552,7 +552,20 @@ RegisterNetEvent('mh-npcservices:client:menu', function()
                         call_data.price = CalculateTaxiPrice(call_data.job, from, to)
                     end
                 end
-                TriggerServerEvent('mh-npcservices:server:sendService', call_data)
+		QBCore.Functions.TriggerCallback('mh-npcservices:server:emsOnline', function(online)
+                    if online >= Config.MinOnlineEMS then
+                        QBCore.Functions.Notify(Lang:t('notify.can_not_use_services'), "error")
+                    else
+                        QBCore.Functions.TriggerCallback("mh-npcservices:server:CanIPayTheBill", function(ICanPay)
+                            if ICanPay then
+                                CallAnimation(call_data.job)
+                                TriggerServerEvent('mh-npcservices:server:sendService', call_data)
+                            else
+                                QBCore.Functions.Notify(Lang:t('notify.cant_pay',{price = call_data.price}), "error")
+                            end
+                        end, call_data.job, call_data.price)
+                    end
+                end, call_data.job)
             end
         end)
     end)
