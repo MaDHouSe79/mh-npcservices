@@ -65,7 +65,7 @@ end
 
 local function CalculateTaxiPrice(job, from, to)
     local route = CalculateTravelDistanceBetweenPoints(from.x, from.y, from.z, to.x, to.y, to.z)
-    local price = ((route / 1000) * Config.Service[job].price)
+    local price = math.floor((route / 1000) * Config.Service[job].price + 0.5)
     return price
 end
 
