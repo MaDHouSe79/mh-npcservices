@@ -934,10 +934,11 @@ RegisterNetEvent('mh-npcservices:client:getinvehicle', function(vehicle)
     end
 end)
 
-RegisterNetEvent('mh-npcservices:client:leavevehicle', function(passenger, vehicle)
-    if IsPedInAnyVehicle(passenger, false) then
+RegisterNetEvent('mh-npcservices:client:leavevehicle', function()
+    local vehicle = GetVehiclePedIsIn(PlayerPedId())
+    if IsPedInAnyVehicle(PlayerPedId(), false) then
         SetVehicleDoorsLocked(vehicle, 0)
-        TaskLeaveVehicle(passenger, vehicle, 1)
+        TaskLeaveVehicle(PlayerPedId(), vehicle, 1)
     end
 end)
 
