@@ -5,7 +5,7 @@
 Config = {}
 Config.UseTarget           = true             -- Defalt false, if you want to use target for cellphones
 Config.Debug               = false            -- Defalt false, debug in console (client/server)
-Config.InteractDiustance   = 2.5              -- Default 2.6, the distance when you can interact with the npc ped driver
+Config.InteractDiustance   = 2.5              -- Default 2.5, the distance when you can interact with the npc ped driver
 Config.MinOnlineEMS        = 1                -- Defalt 1, How many ems people have to be online, to iqnore the npc services.
 Config.Cooldown            = 350000           -- Defalt 25000, A cooldown, (5mins) this is so players can't spam it.
 Config.AutoCallAmbulance   = true             -- Defalt true, if true, it calls the ambulance automatically for you.
