@@ -668,7 +668,7 @@ CreateThread(function()
                         end
                     end
                     if company.job == 'police' or company.job == 'ambulance' then SetVehicleSiren(company.vehicle, false) end
-                    if ddistance < 2.5 then
+                    if ddistance < Config.InteractDiustance then
                         ClearPedTasks(company.driver)
                         RemoveBlip(company.blip)
                         company.driveToPlayer = false
