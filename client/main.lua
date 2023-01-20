@@ -433,6 +433,7 @@ local function CallServices()
         company.blip = CreateServicesBlips(company.vehicle, company.name)
         DriveToLocation(spawnPosition, coords) -- From To
         company.driveToPlayer = true
+	company.driverIsInVehicle = true
         if company.job == "police" then SetFakeWantedLevel(6) end
     end
 end
@@ -655,6 +656,7 @@ CreateThread(function()
                     end
                 end
                 if vdistance < company.spotRadius then
+		    company.driverIsInVehicle = false
                     if company.job == "mechanic" then
                         local engine = GetWorldPositionOfEntityBone(company.damage_vehicle, GetEntityBoneIndexByName(company.damage_vehicle, "engine"))
                         TaskGoToCoordAnyMeans(company.driver, engine, 1.0, 0, 0, company.walkStyle, 0xbf800000)
