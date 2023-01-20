@@ -59,13 +59,13 @@ local function CallAnimation(job)
         TaskPlayAnim(PlayerPedId(), dictionary, animation, 1.5, 1.0, -1, 50, 2.0, 0, 0, 0)
         Wait(8100)
         ClearPedTasks(PlayerPedId())
+	DeletePhoneProp()
 	Wait(500)
         if job == "mechanic" and IsPedInAnyVehicle(PlayerPedId(), false) then
             local vehicle = GetVehiclePedIsIn(PlayerPedId())
             SetVehicleDoorsLocked(vehicle, 0)
             TaskLeaveVehicle(PlayerPedId(), vehicle, 1)
         end
-        DeletePhoneProp()
     end
 end
 
