@@ -59,6 +59,8 @@ local function CallAnimation(job)
         TaskPlayAnim(PlayerPedId(), dictionary, animation, 1.5, 1.0, -1, 50, 2.0, 0, 0, 0)
         Wait(8100)
         ClearPedTasks(PlayerPedId())
+	Wait(500)
+	if job == "mechanic" then TriggerEvent('mh-npcservices:client:leavevehicle') end
         DeletePhoneProp()
     end
 end
