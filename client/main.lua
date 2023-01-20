@@ -60,7 +60,11 @@ local function CallAnimation(job)
         Wait(8100)
         ClearPedTasks(PlayerPedId())
 	Wait(500)
-	if job == "mechanic" then TriggerEvent('mh-npcservices:client:leavevehicle') end
+        if job == "mechanic" and IsPedInAnyVehicle(PlayerPedId(), false) then
+            local vehicle = GetVehiclePedIsIn(PlayerPedId())
+            SetVehicleDoorsLocked(vehicle, 0)
+            TaskLeaveVehicle(PlayerPedId(), vehicle, 1)
+        end
         DeletePhoneProp()
     end
 end
