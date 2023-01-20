@@ -470,6 +470,7 @@ end)
 RegisterNetEvent('mh-npcservices:client:sendService', function(callData)
     if isInJail then return end
     if #company == 0 and not company.isCalled then
+	CallAnimation(callData.job)
         SetCompanyData(callData.job)
         company.isCalled = true
         company.price = callData.price
