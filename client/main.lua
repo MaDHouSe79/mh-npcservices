@@ -551,14 +551,6 @@ RegisterNetEvent('mh-npcservices:client:menu', function()
                         call_data.price = CalculateTaxiPrice(call_data.job, from, to)
                     end
                 end
-                if call_data.job == 'taxi' or call_data.job == 'limousine' then
-                    if DoesBlipExist(GetFirstBlipInfoId(8)) then
-                        local x, y, z = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, GetFirstBlipInfoId(8), Citizen.ResultAsVector()))
-                        local from = GetEntityCoords(PlayerPedId())
-                        local to = vector3(x, y, z)
-                        call_data.price = CalculateTaxiPrice(call_data.job, from, to)
-                    end
-                end
 		TriggerServerEvent('mh-npcservices:server:sendService', call_data)
             end
         end)
