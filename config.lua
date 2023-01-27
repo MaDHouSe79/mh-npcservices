@@ -18,6 +18,7 @@ Config.PhoneModel          = "prop_amb_phone" -- Default prop_amb_phone, hand ph
 Config.StuckTimerCheck     = 15               -- Default 15, a stuck timer check.
 Config.StuckResetTimer     = 15               -- Default 15, reset stuck time.
 
+Config.UseCallForOtherPlayers = false
 
 Config.UsePoliceAssist     = false            -- if true, a plice player can let a police ped drive the player to the HQ
 Config.UseAutoJail         = false            -- Default false, if you dont have police you can set this true
