@@ -3,27 +3,25 @@
 --[[ ===================================================== ]]--
 
 Config = {}
-Config.UseTarget           = true             -- Defalt false, if you want to use target for cellphones
-Config.Debug               = false            -- Defalt false, debug in console (client/server)
-Config.InteractDiustance   = 2.5              -- Default 2.5, the distance when you can interact with the npc ped driver
-Config.MinOnlineEMS        = 1                -- Defalt 1, How many ems people have to be online, to iqnore the npc services.
-Config.Cooldown            = 350000           -- Defalt 25000, A cooldown, (5mins) this is so players can't spam it.
-Config.AutoCallAmbulance   = true             -- Defalt true, if true, it calls the ambulance automatically for you.
-Config.AutoCallTimer       = 25000            -- Defalt 20000, A timer to call ambulance automatically after 20secs.
-Config.ForceFirstperson    = false            -- Default false, it force firstperon when inside a job vehicle.
-Config.MinDamageForFlatbed = 750              -- Defalt 750, a flatbed is comming if the vehicle damage is below this value.
-Config.RadialMenuIcone     = "star-of-life"   -- Defalt "star-of-life", icon form the radial menu.
-Config.PhoneModel          = "prop_amb_phone" -- Default prop_amb_phone, hand phone, if you have a other phone model, you can use it here
-
-Config.StuckTimerCheck     = 15               -- Default 15, a stuck timer check.
-Config.StuckResetTimer     = 15               -- Default 15, reset stuck time.
-
-Config.UseCallForOtherPlayers = false
-
-Config.UsePoliceAssist     = false            -- if true, a plice player can let a police ped drive the player to the HQ
-Config.UseAutoJail         = false            -- Default false, if you dont have police you can set this true
-Config.MinJailTime         = 120              -- 2 min min jail time (Default: 120)
-Config.MaxJailTime         = 250              -- 5 min max jail time (Default: 350)
+Config.UseTarget              = true             -- Defalt false, if you want to use target for cellphones
+Config.Debug                  = false            -- Defalt false, debug in console (client/server)
+Config.InteractDiustance      = 2.5              -- Default 2.5, the distance when you can interact with the npc ped driver
+Config.MinOnlineEMS           = 1                -- Defalt 1, How many ems people have to be online, to iqnore the npc services.
+Config.Cooldown               = 350000           -- Defalt 25000, A cooldown, (5mins) this is so players can't spam it.
+Config.AutoCallAmbulance      = true             -- Defalt true, if true, it calls the ambulance automatically for you.
+Config.AutoCallTimer          = 25000            -- Defalt 20000, A timer to call ambulance automatically after 20secs.
+Config.ForceFirstperson       = false            -- Default false, it force firstperon when inside a job vehicle.
+Config.MinDamageForFlatbed    = 750              -- Defalt 750, a flatbed is comming if the vehicle damage is below this value.
+Config.RadialMenuIcone        = "star-of-life"   -- Defalt "star-of-life", icon form the radial menu.
+Config.PhoneModel             = "prop_amb_phone" -- Default prop_amb_phone, hand phone, if you have a other phone model, you can use it here
+Config.StuckTimerCheck        = 15               -- Default 15, a stuck timer check.
+Config.StuckResetTimer        = 15               -- Default 15, reset stuck time.
+Config.UseUnlimitHealth       = true             -- if true, all service peds and vehicles will have inlimit health.
+Config.UseCallForOtherPlayers = false            -- if false, players can't call the service for other players
+Config.UsePoliceAssist        = false            -- if true, a plice player can let a police ped drive the player to the HQ
+Config.UseAutoJail            = false            -- Default false, if you dont have police you can set this true
+Config.MinJailTime            = 120              -- 2 min min jail time (Default: 120)
+Config.MaxJailTime            = 250              -- 5 min max jail time (Default: 350)
 
 
 Config.JobPeds = {
