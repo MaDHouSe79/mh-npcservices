@@ -141,6 +141,8 @@ local function DriveToLocation(from, to)
             TaskVehicleDriveToCoordLongrange(company.driver, company.vehicle, to.x, to.y, to.z, company.speed, company.driveStyle, 2.0)
         end
         SetPedKeepTask(company.driver, true)
+	if company.job == "police" then SetVehicleSiren(company.vehicle, true) end
+        if company.job == "ambulance" then SetVehicleSiren(company.vehicle, true) end
         company.isDriving = true
     end
 end
@@ -362,6 +364,8 @@ local function CreateServicesPed(coords, vehicle, seat)
     SetPedIntoVehicle(ped, vehicle, seat)
     SetEntityAsMissionEntity(ped, true, true)
     SetModelAsNoLongerNeeded(model)
+    SetPedKeepTask(ped, true)
+    SetBlockingOfNonTemporaryEvents(ped, true)
     SetPedSweat(ped, 100.0)
     return ped
 end
@@ -799,6 +803,26 @@ CreateThread(function()
             end
         end
         Wait(100)
+    end
+end)
+
+CreateThread(function()
+    while true do
+        if LocalPlayer.state.isLoggedIn then
+            if Config.UseUnlimitHealth then
+                if company.job ~= nil then
+                    if company.vehicle ~= nil then
+                        SetVehicleBodyHealth(company.vehicle, 1000.0)
+                        SetVehicleEngineHealth(company.vehicle, 1000.0)
+                        SetVehicleFuelLevel(company.vehicle, 100.0)
+                        DecorSetFloat(company.vehicle, "_FUEL_LEVEL", GetVehicleFuelLevel(company.vehicle))
+                    end
+                    if company.driver ~= nil then SetEntityHealth(company.driver, 200) end
+                    if company.codriver ~= nil then SetEntityHealth(company.codriver, 200) end
+                end
+            end
+        end
+        Wait(500)
     end
 end)
 
