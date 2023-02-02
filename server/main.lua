@@ -97,14 +97,27 @@ RegisterServerEvent('mh-npcservices:server:sendService', function(callData)
     local num = nil
     if not id then id = src end
     if src == callData.targetId then num = src else num = callData.targetId end
-    local count = QBCore.Functions.GetDutyCount(callData.job)
-    if count >= Config.MinOnlineEMS then
-        TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.can_not_use_services'), "error", 10000)
-    else
-        if CanIPayTheBill(num, callData.job, callData.price) then
-            TriggerClientEvent("mh-npcservices:client:sendService", num, callData)
+    local caller = QBCore.Functions.GetPlayer(callData.callerId)
+    if isEMSService(callData.callerId) then
+        if callData.targetId == callData.callerId then
+            if Config.UseServicesForJobs then
+                TriggerClientEvent("mh-npcservices:client:sendService", callData.targetId, callData)
+            else
+                TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.can_not_use_services_on_your_seld'), "error", 10000)
+            end
         else
-            TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.cant_pay',{price = callData.price}), "error", 10000)
+            TriggerClientEvent("mh-npcservices:client:sendService", callData.targetId, callData)
+        end
+    else
+        local count = QBCore.Functions.GetDutyCount(callData.job)
+        if count >= Config.MinOnlineEMS then
+            TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.can_not_use_services'), "error", 10000)
+        else
+            if CanIPayTheBill(num, callData.job, callData.price) then
+                TriggerClientEvent("mh-npcservices:client:sendService", num, callData)
+            else
+                TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.cant_pay',{price = callData.price}), "error", 10000)
+            end
         end
     end
 end)
