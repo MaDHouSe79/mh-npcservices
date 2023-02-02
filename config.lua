@@ -18,6 +18,7 @@ Config.StuckTimerCheck        = 15               -- Default 15, a stuck timer ch
 Config.StuckResetTimer        = 15               -- Default 15, reset stuck time.
 Config.UseUnlimitHealth       = true             -- if true, all service peds and vehicles will have inlimit health.
 Config.UseCallForOtherPlayers = false            -- if false, players can't call the service for other players
+Config.UseServicesForJobs     = true             -- if true, your are able to call a police service for your self (normal you can't do this)
 Config.UsePoliceAssist        = false            -- if true, a plice player can let a police ped drive the player to the HQ
 Config.UseAutoJail            = false            -- Default false, if you dont have police you can set this true
 Config.MinJailTime            = 120              -- 2 min min jail time (Default: 120)
