@@ -48,6 +48,12 @@
 - Go to resources/[qb]/qb-smallresources/config.lua look for (Config.BlacklistedVehs)
 - Set vehicles in to false so it can spawn in.
 
+## How it works
+- If you want to use the taxi, you need to add a waypoint first cause it will not show in the menu if you dont have a waypoint.
+- If you want to use the mechanic or towtruck you need to sit in your vehicle when you call.
+- If you want to use the ambulance, it calls automatic, but you can alse call for other players aswell.
+- if you want to use the police, you can call at any point where you are.
+
 <p align="center">
   <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
 </p>
