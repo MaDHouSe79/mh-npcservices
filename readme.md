@@ -47,6 +47,10 @@
 ### Dont forget to edit the qb-smallresources/config.lua 
 - Go to resources/[qb]/qb-smallresources/config.lua look for (Config.BlacklistedVehs)
 - Set vehicles in to false so it can spawn in.
+- 
+<p align="center">
+  <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
+</p>
 
 ## How it works
 - If you want to use the taxi, you need to add a waypoint first cause it will not show in the menu if you dont have a waypoint.
