@@ -506,10 +506,22 @@ RegisterNetEvent('mh-npcservices:client:menu', function()
     QBCore.Functions.TriggerCallback('mh-npcservices:server:GetOnlinePlayers', function(online)
         playerlist[#playerlist + 1] = {value = GetPlayerServerId(PlayerId()), text = Lang:t('menu.for_your_self')}
         if Config.UseCallForOtherPlayers then
-	    for key, v in pairs(online) do
-                if v.source ~= GetPlayerServerId(PlayerId()) then playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname} end
+            for key, v in pairs(online) do
+                if Config.CallOnlyForClosestPlayers then
+                    local player, distance = QBCore.Functions.GetClosestPlayer()
+                    if player ~= -1 and distance < 2.5 then
+                        local playerId = GetPlayerServerId(player)
+                        if v.source ~= GetPlayerServerId(PlayeDrId()) then 
+                            playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname} 
+                        end
+                    end
+                else
+                    if v.source ~= GetPlayerServerId(PlayerId()) then 
+                        playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname} 
+                    end
+                end
             end
-	end
+        end
         QBCore.Functions.TriggerCallback("mh-npcservices:server:isEMSServices", function(isService)
             local menuData = {}
             if not IsPedInAnyVehicle(PlayerPedId()) then
