@@ -103,7 +103,7 @@ RegisterServerEvent('mh-npcservices:server:sendService', function(callData)
             if Config.UseServicesForJobs then
                 TriggerClientEvent("mh-npcservices:client:sendService", callData.targetId, callData)
             else
-                TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.can_not_use_services_on_your_seld'), "error", 10000)
+                TriggerClientEvent('QBCore:Notify', num, Lang:t('notify.can_not_use_services_on_your_self'), "error", 10000)
             end
         else
             TriggerClientEvent("mh-npcservices:client:sendService", callData.targetId, callData)
