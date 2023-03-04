@@ -16,11 +16,13 @@ local Translations = {
         ['jail_free_time'] = 'FREE IN: ~r~%{freetime}~s~ SECONDS',
         ['press_e_to_enter'] = "Press ~g~[E]~s~ in %{waitTime} secondes or the %{job} leaves",
         ['you_are_calling'] = "You are calling the %{job}",
-        ['not_the_owner'] = 'You do not own this vehicle!',
         ['left_vehicle'] = "you left the vehicle",
         ['can_not_use_services'] = "You cannot use these services if there is a player in town with this job",
         ['can_not_use_services_on_your_self'] = "You cannot use these services on yourself",
-
+    },
+    error = {
+        ['none_nearby'] = "No one nearby!",
+        ['not_the_owner'] = 'You do not own this vehicle!',
     },
     menu = {
         ['title'] = "Call Services",
@@ -50,6 +52,6 @@ local Translations = {
 }
 
 Lang = Locale:new({
-    phrases = Translations, 
+    phrases = Translations,
     warnOnMissing = true
 })
