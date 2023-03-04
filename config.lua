@@ -24,7 +24,7 @@ Config.UseAutoJail            = false            -- Default false, if you dont h
 Config.MinJailTime            = 120              -- 2 min min jail time (Default: 120)
 Config.MaxJailTime            = 250              -- 5 min max jail time (Default: 350)
 
-Config.CallOnlyForClosestPlayers = true          -- if false, you can call for ant player on the server
+Config.CallOnlyForClosestPlayers = true          -- if false, you can call for any player on the server
 
 Config.JobPeds = {
     ['police']        = {models = {"mp_m_fibsec_01"}},
