@@ -26,6 +26,10 @@ local Translations = {
         ['select_player'] = "Selecteer een speler",
         ['for_your_self'] = "Voor je zelf",
     },
+    error = {
+        ['none_nearby'] = "Er is niemand in de buurt!",
+        ['not_the_owner'] = 'Je bent niet de eigenaar van het voertuig!',
+    },
     job = {
         ['police'] = {
             ['label'] = "NPC Politie",
