@@ -16,10 +16,13 @@ local Translations = {
         ['jail_free_time'] = 'Vrij IN: ~r~%{freetime}~s~ SECONDES',
         ['press_e_to_enter'] = "Druk ~g~[E]~s~ binnen %{waitTime} seconde anders vertrek de %{job}",
         ['you_are_calling'] = "Je bent de %{job} aan het bellen",
-        ['not_the_owner'] = 'Je bent geen eigenaar van dit voertuig!',
         ['left_vehicle'] = "Je bent uitgestapt",
         ['can_not_use_services'] = "Je kunt deze services niet gebruiken als er een speler in de stad is met deze job",
         ['can_not_use_services_on_your_self'] = "Je kunt deze services niet op jezelf gebruiken",
+    },
+    error = {
+        ['none_nearby'] = "Niemand is in de buurt",
+        ['not_the_owner'] = 'Je bent geen eigenaar van dit voertuig!',
     },
     menu = {
         ['title'] = "Bel Services",
@@ -49,6 +52,6 @@ local Translations = {
 }
 
 Lang = Locale:new({
-    phrases = Translations, 
+    phrases = Translations,
     warnOnMissing = true
 })
