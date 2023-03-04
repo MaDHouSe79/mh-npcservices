@@ -19,6 +19,8 @@ local Translations = {
         ['not_the_owner'] = 'You do not own this vehicle!',
         ['left_vehicle'] = "you left the vehicle",
         ['can_not_use_services'] = "You cannot use these services if there is a player in town with this job",
+        ['can_not_use_services_on_your_self'] = "You cannot use these services on yourself",
+
     },
     menu = {
         ['title'] = "Call Services",
