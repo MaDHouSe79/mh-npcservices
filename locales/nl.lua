@@ -19,6 +19,7 @@ local Translations = {
         ['not_the_owner'] = 'Je bent geen eigenaar van dit voertuig!',
         ['left_vehicle'] = "Je bent uitgestapt",
         ['can_not_use_services'] = "Je kunt deze services niet gebruiken als er een speler in de stad is met deze job",
+        ['can_not_use_services_on_your_self'] = "Je kunt deze services niet op jezelf gebruiken",
     },
     menu = {
         ['title'] = "Bel Services",
