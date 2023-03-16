@@ -504,75 +504,79 @@ RegisterNetEvent('mh-npcservices:client:menu', function()
     if isInJail then return end
     local playerlist = {}
     QBCore.Functions.TriggerCallback('mh-npcservices:server:GetOnlinePlayers', function(online)
-        playerlist[#playerlist + 1] = {value = GetPlayerServerId(PlayerId()), text = Lang:t('menu.for_your_self')}
-        if Config.UseCallForOtherPlayers then
-            for key, v in pairs(online) do
-                if Config.CallOnlyForClosestPlayers then
-                    local player, distance = QBCore.Functions.GetClosestPlayer()
-                    if player ~= -1 and distance < 2.5 then
-                        local playerId = GetPlayerServerId(player)
-                        if v.source ~= GetPlayerServerId(PlayeDrId()) then 
-                            playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname} 
-                        end
-                    end
-                else
-                    if v.source ~= GetPlayerServerId(PlayerId()) then 
-                        playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname} 
-                    end
+        for key, v in pairs(online) do
+            if v.source == GetPlayerServerId(PlayerId()) then 
+                playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname} 
+            end
+            local player, distance = QBCore.Functions.GetClosestPlayer()
+            if player ~= -1 and distance < 2.5 then
+                local playerId = GetPlayerServerId(player)
+                if v.source ~= GetPlayerServerId(PlayerId()) then 
+                    playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname} 
                 end
             end
         end
-        QBCore.Functions.TriggerCallback("mh-npcservices:server:isEMSServices", function(isService)
-            local menuData = {}
-            if not IsPedInAnyVehicle(PlayerPedId()) then
-                if DoesBlipExist(GetFirstBlipInfoId(8)) then menuData[#menuData + 1] = {value = "taxi", text = Lang:t('job.taxi.label') } end
-                if DoesBlipExist(GetFirstBlipInfoId(8)) then menuData[#menuData + 1] = {value = "limousine", text = Lang:t('job.limousine.label') }  end
-            end
-            if IsPedInAnyVehicle(PlayerPedId()) then menuData[#menuData + 1] = {value = "mechanic", text = Lang:t('job.mechanic.label') } end
-            menuData[#menuData + 1] = {value = "ambulance", text = Lang:t('job.ambulance.label') }
-            if Config.UsePoliceAssist and QBCore.Functions.GetPlayerData().job.name == "police" and isService then menuData[#menuData + 1] = { value = "police", text = Lang:t('job.police.label')} end           
-            local menu = exports["qb-input"]:ShowInput({
-                header = Lang:t('menu.title'),
-                submitText = "",
-                inputs = {
-                    {
-                        text = Lang:t('menu.select_player'),
-                        name = "id",
-                        type = "select",
-                        options = playerlist,
-                        isRequired = true
-                    },
-                    {
-                        text = Lang:t('menu.select_company'),
-                        name = "company",
-                        type = "select",
-                        options = menuData,
-                        isRequired = true
-                    }
-                }
-            })
-            if menu then
-                if not menu.id or not menu.company then return end
-                local call_data = {}
-                call_data.job = tostring(menu.company)
-                call_data.callerId = GetPlayerServerId(PlayerId())
-                call_data.price = Config.Service[call_data.job].price
-                if tonumber(menu.id) == GetPlayerServerId(PlayerId()) then
-                    call_data.targetId = GetPlayerServerId(PlayerId())
-                else
-                    call_data.targetId = tonumber(menu.id)
-                end
-                if call_data.job == 'taxi' or call_data.job == 'limousine' then
+        if playerlist == nil then
+            return
+        else
+            QBCore.Functions.TriggerCallback("mh-npcservices:server:isEMSServices", function(isService)
+                local menuData = {}
+                if not IsPedInAnyVehicle(PlayerPedId()) then
                     if DoesBlipExist(GetFirstBlipInfoId(8)) then
-                        local x, y, z = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, GetFirstBlipInfoId(8), Citizen.ResultAsVector()))
-                        local from = GetEntityCoords(PlayerPedId())
-                        local to = vector3(x, y, z)
-                        call_data.price = CalculateTaxiPrice(call_data.job, from, to)
+                        menuData[#menuData + 1] = {value = "taxi", text = Lang:t('job.taxi.label') }
+                        menuData[#menuData + 1] = {value = "limousine", text = Lang:t('job.limousine.label') }
                     end
                 end
-		TriggerServerEvent('mh-npcservices:server:sendService', call_data)
-            end
-        end)
+                if IsPedInAnyVehicle(PlayerPedId()) then
+                    menuData[#menuData + 1] = {value = "mechanic", text = Lang:t('job.mechanic.label') }
+                end
+                menuData[#menuData + 1] = {value = "ambulance", text = Lang:t('job.ambulance.label') }
+                if Config.UsePoliceAssist and QBCore.Functions.GetPlayerData().job.name == "police" and isService then
+                    menuData[#menuData + 1] = { value = "police", text = Lang:t('job.police.label')}
+                end
+                local menu = exports["qb-input"]:ShowInput({
+                    header = Lang:t('menu.title'),
+                    submitText = "",
+                    inputs = {
+                        {
+                            text = Lang:t('menu.select_player'),
+                            name = "id",
+                            type = "select",
+                            options = playerlist,
+                            isRequired = true
+                        },
+                        {
+                            text = Lang:t('menu.select_company'),
+                            name = "company",
+                            type = "select",
+                            options = menuData,
+                            isRequired = true
+                        }
+                    }
+                })
+                if menu then
+                    if not menu.id or not menu.company then return end
+                    local call_data = {}
+                    call_data.job = tostring(menu.company)
+                    call_data.callerId = GetPlayerServerId(PlayerId())
+                    call_data.price = Config.Service[call_data.job].price
+                    if tonumber(menu.id) == GetPlayerServerId(PlayerId()) then
+                        call_data.targetId = GetPlayerServerId(PlayerId())
+                    else
+                        call_data.targetId = tonumber(menu.id)
+                    end
+                    if call_data.job == 'taxi' or call_data.job == 'limousine' then
+                        if DoesBlipExist(GetFirstBlipInfoId(8)) then
+                            local x, y, z = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, GetFirstBlipInfoId(8), Citizen.ResultAsVector()))
+                            local from = GetEntityCoords(PlayerPedId())
+                            local to = vector3(x, y, z)
+                            call_data.price = CalculateTaxiPrice(call_data.job, from, to)
+                        end
+                    end
+                    TriggerServerEvent('mh-npcservices:server:sendService', call_data)
+                end
+            end)
+        end
     end)
 end)
 
