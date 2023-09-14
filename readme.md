@@ -26,11 +26,15 @@
   <img alig src="https://github-profile-trophy.vercel.app/?username=MaDHouSe79&margin-w=15&column=6" />
 </p>
 
-<p align="center">
-  <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
-</p>
 
 # MH-NpcServices (BETA)
+
+### Dependencies
+- [qb-core](https://github.com/qbcore-framework/qb-core)
+- [qb-input](https://github.com/qbcore-framework/qb-core/qb-input)
+- [qb-target](https://github.com/qbcore-framework/qb-core/qb-target)
+- [qb-radialmenu](https://github.com/qbcore-framework/qb-core/qb-radialmenu)
+
 
 ### MH 6 in 1 NPC Services Script by MaDHouSe
 - NPC Police    - Transport you to police HQ jail, this with 2 agent peds with a riot vehicle.
@@ -40,17 +44,11 @@
 - NPC Taxi      - Take you where ever you want on the map.(just set a waypoint and call a taxi)
 - NPC Limo      - Take you where ever you want on the map in style .(just set a waypoint and call a limo)
 
-<p align="center">
-  <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
-</p>
 
 ### Dont forget to edit the qb-smallresources/config.lua 
 - Go to resources/[qb]/qb-smallresources/config.lua look for (Config.BlacklistedVehs)
 - Set vehicles in to false so it can spawn in.
 
-<p align="center">
-  <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
-</p>
 
 ## How it works
 - If you want to use the taxi, you need to add a waypoint first cause it will not show in the menu if you dont have a waypoint.
@@ -58,19 +56,11 @@
 - If you want to use the ambulance, it calls automatic, but you can alse call for other players aswell.
 - if you want to use the police, you can call at any point where you are.
 
-<p align="center">
-  <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
-</p>
-
 ## NOTE Open Source, at least give me the credit for making this script.
 - Don't act if you created this script, you can change stuff or use stuff, i don't care.
 - But give me atleast the credits for making it, and give it for free to everyone.
 - if you have paid for this script, you have been scammed, this script is free to everyone.
 - not encrypted, not ip blocked.
-
-<p align="center">
-  <img alig src="https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/split.png" />
-</p>
 
 ### 🐞 Any bugs, let my know. 👊😎
 
