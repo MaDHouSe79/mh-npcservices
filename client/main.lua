@@ -670,6 +670,15 @@ CreateThread(function()
                         LeaveTarget()
                     end
                 end
+		if company.job == 'ambulance' then
+                    if not QBCore.Functions.GetPlayerData().metadata['isdead'] or not QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
+                        company.driveToPlayer = false
+                        company.isDriving = false
+                        ClearPedTasks(company.driver)
+                        RemoveBlip(company.blip)
+                        LeaveTarget()
+                    end
+                end
                 if vdistance < company.spotRadius then
 		    company.driverIsInVehicle = false
                     if company.job == "mechanic" then
