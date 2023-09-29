@@ -652,178 +652,187 @@ end)
 CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
-            if company.driveToPlayer then
-                local coords = nil
-                if company.job == 'mechanic' then
-                    coords = GetEntityCoords(company.damage_vehicle)
-                else
-                    coords = GetEntityCoords(PlayerPedId())
-                end
-                local vdistance = GetDistance(coords, GetEntityCoords(company.vehicle))
-                local ddistance = GetDistance(coords, GetEntityCoords(company.driver))
-                if company.job == 'mechanic' or company.job == 'taxi' or company.job == 'limousine' then
-                    if QBCore.Functions.GetPlayerData().metadata['isdead'] or QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
-                        company.driveToPlayer = false
-                        company.isDriving = false
-                        ClearPedTasks(company.driver)
-                        RemoveBlip(company.blip)
-                        LeaveTarget()
-                    end
-                end
-		if company.job == 'ambulance' then
-                    if not QBCore.Functions.GetPlayerData().metadata['isdead'] or not QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
-                        company.driveToPlayer = false
-                        company.isDriving = false
-                        ClearPedTasks(company.driver)
-                        RemoveBlip(company.blip)
-                        LeaveTarget()
-                    end
-                end
-                if vdistance < company.spotRadius then
-		    company.driverIsInVehicle = false
-                    if company.job == "mechanic" then
-                        local engine = GetWorldPositionOfEntityBone(company.damage_vehicle, GetEntityBoneIndexByName(company.damage_vehicle, "engine"))
-                        TaskGoToCoordAnyMeans(company.driver, engine, 1.0, 0, 0, company.walkStyle, 0xbf800000)
-                        ddistance = GetDistance(vector3(engine.x, engine.y, engine.z), GetEntityCoords(company.driver))
-                    else
-                        if company.job == "police" or company.job == "ambulance" then
-                            if company.job == "police" then FreezeEntityPosition(PlayerPedId(), true) end
-                            TaskGoToCoordAnyMeans(company.driver, coords, 2.0, 0, 0, company.walkStyle, 0xbf800000)
-                        else
-                            TaskGoToCoordAnyMeans(company.driver, coords, 1.0, 0, 0, company.walkStyle, 0xbf800000)
-                        end
-                    end
-                    if company.job == 'police' or company.job == 'ambulance' then SetVehicleSiren(company.vehicle, false) end
-                    if ddistance < Config.InteractDiustance then
-                        ClearPedTasks(company.driver)
-                        RemoveBlip(company.blip)
-                        company.driveToPlayer = false
-                        company.isDriving = false
-                        if company.job == 'police' then
-                            SetFakeWantedLevel(0)
-                            if not company.isEscorted then WalkToVehicle() end
-                        elseif company.job == 'ambulance' then
-                            if QBCore.Functions.GetPlayerData().metadata['isdead'] or QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
-                                if not company.isEscorted then WalkToVehicle() end
-                            else
-                                HelpOnLocation()
-                            end
-                        elseif company.job == 'mechanic' then
-                            if GetVehicleEngineHealth(company.damage_vehicle) < Config.MinDamageForFlatbed then
-                                GoToMechanicShop()
-                            else
-                                HelpOnLocation()
-                            end
-                        elseif company.job == 'taxi' then
-                            company.isWaiting = true
-                        elseif company.job == 'limousine' then
-                            company.isWaiting = true
-                        end
-                    end
-                end
-            elseif company.isReadyToGo then
-                if not IsPedInVehicle(PlayerPedId(), company.vehicle, false) then TempDisableControl() end
-                SetVehicleDoorsLocked(company.vehicle, 0)
-                if IsPedInVehicle(company.driver, company.vehicle, false) and IsPedInVehicle(PlayerPedId(), company.vehicle, false) then
-                    company.isReadyToGo = false
-                    if company.job == 'taxi' or company.job == 'limousine' then GoToLocation() end
+            if company.job == "ambulance" and not QBCore.Functions.GetPlayerData().metadata['isdead'] or not QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
+                company.isCalled = false
+                company.isWaiting = false
+                company.driveToPlayer = false
+                company.driveToCompany = false
+                company.driveToLocation = false
+                company.driveToMechanic = false
+                company.driverIsInVehicle = false
+                company.playerIsInVehicle = false
+                company.isHandcuffed = false
+                company.isDriving = false
+                company.isEscorted = false
+                ClearPedTasks(company.driver)
+                RemoveBlip(company.blip)
+                LeaveTarget()
+            else
+                if company.driveToPlayer then
+                    local coords = nil
                     if company.job == 'mechanic' then
-                        DriveToLocation(GetEntityCoords(company.vehicle), company.home)
-                        company.driveToMechanic = true
+                        coords = GetEntityCoords(company.damage_vehicle)
+                    else
+                        coords = GetEntityCoords(PlayerPedId())
                     end
-                end
-            elseif company.isEscorted then
-                local distance = GetDistance(GetEntityCoords(company.driver), GetEntityCoords(company.vehicle))
-                if company.job == "police" then
-                    loadAnimDict("mp_arresting")
-                    TaskPlayAnim(PlayerPedId(), "mp_arresting", "idle", 8.0, -8, -1, 16, 0, 0, 0, 0)
-                end
-                if distance <= 5 then
-                    company.isEscorted = false
-                    company.coords = company.home
-                    DoScreenFadeOut(500)
-                    Wait(700)
-                    DetachEntity(PlayerPedId(), true, false)
-                    TaskWarpPedIntoVehicle(PlayerPedId(), company.vehicle, company.passengerSeat)
-                    TaskWarpPedIntoVehicle(company.driver, company.vehicle, -1)
-                    Wait(1000)
-                    DoScreenFadeIn(500)
-                    company.driveToCompany = true
-                    DriveToLocation(GetEntityCoords(company.vehicle), company.home)
-                end
-            elseif company.driveToCompany then
-                local distance = GetDistance(GetEntityCoords(company.vehicle), company.home)
-                lastCoords = GetEntityCoords(company.vehicle)
-                if Config.ForceFirstperson then SetFollowVehicleCamViewMode(4) end
-                if distance <= 5 then
-                    company.driveToCompany = false
-                    company.isDriving = false
-                    BringVehicleToHalt(company.vehicle, 5.0, 1000, true)
-                    Wait(1100)
-                    ClearPedTasks(company.driver)
-                    SetVehicleSiren(company.vehicle, false)
-                    DoScreenFadeOut(500)
-                    Wait(600)
-                    if Config.ForceFirstperson then SetFollowVehicleCamViewMode(followPedCamMode) end
-                    SetEntityCoords(PlayerPedId(), vector3(company.checkin.x, company.checkin.y, company.checkin.z), false, false, false, true)
-                    if company.job == "police" then
-                        if Config.UseAutoJail then
-                            isInJail = true
-                            jailTime = math.random(Config.MinJailTime, Config.MaxJailTime)
+                    local vdistance = GetDistance(coords, GetEntityCoords(company.vehicle))
+                    local ddistance = GetDistance(coords, GetEntityCoords(company.driver))
+                    if company.job == 'mechanic' or company.job == 'taxi' or company.job == 'limousine' then
+                        if QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
+                            company.driveToPlayer = false
+                            company.isDriving = false
+                            ClearPedTasks(company.driver)
+                            RemoveBlip(company.blip)
+                            LeaveTarget()
                         end
-                        FreezeEntityPosition(PlayerPedId(), false)
-                        company.isHandcuffed = false
                     end
-
-                    if company.job == "ambulance" then FreezeEntityPosition(PlayerPedId(), false) end
-                    Wait(1000)
-                    DoScreenFadeIn(500)
-                    Wait(500)
-                    LeaveTarget()                    
-                end
-            elseif company.driveToMechanic then
-                local distance = GetDistance(GetEntityCoords(company.vehicle), company.home)
-                lastCoords = GetEntityCoords(company.vehicle)
-                if Config.ForceFirstperson then SetFollowVehicleCamViewMode(4) end
-                if distance <= 5 then
-                    company.driveToMechanic = false
-                    company.isDriving = false
-                    BringVehicleToHalt(company.vehicle, 5.0, 1000, true)
-                    ClearPedTasks(company.driver)
-                    TaskLeaveVehicle(PlayerPedId(), company.vehicle, 1)
-                    TriggerServerEvent('mh-npcservices:server:pay', company.job, company.price)
-                    if Config.ForceFirstperson then SetFollowVehicleCamViewMode(followPedCamMode) end
-                    Wait(3000)
-                    DetachEntity(company.damage_vehicle, false, false)
-                    Wait(100)
-                    SetEntityCoords(company.damage_vehicle, vector3(company.vehicleDrop.x, company.vehicleDrop.y, company.vehicleDrop.z), false, false, false, true)
-                    Wait(2000)
-                    LeaveTarget()
-                end
-            elseif company.driveToLocation then
-                local distance = GetDistance(GetEntityCoords(company.vehicle), company.coords)
-                if Config.ForceFirstperson then SetFollowVehicleCamViewMode(4) end
-                lastCoords = GetEntityCoords(company.vehicle)
-                if distance <= 5 or not DoesBlipExist(GetFirstBlipInfoId(8)) then
-                    company.driveToLocation = false
-                    company.isDriving = false
-                    BringVehicleToHalt(company.vehicle, 5.0, 1000, true)
-                    Wait(1100)
-                    ClearPedTasks(company.driver)
-                    TriggerServerEvent('mh-npcservices:server:pay', company.job, company.price)
-                    PlayAmbientSpeech1(company.driver, "TAXID_CLOSE_AS_POSS", "SPEECH_PARAMS_FORCE_NORMAL")
-                    Wait(100)
-                    if Config.ForceFirstperson then SetFollowVehicleCamViewMode(followPedCamMode) end
-                    TriggerServerEvent('mh-npcservices:server:leavevehicle', company.vehicle)
-                    Wait(3100)
-                    LeaveTarget()
-                end
-            elseif company.driveAway then
-                lastCoords = GetEntityCoords(company.vehicle)
-                local distance = GetDistance(GetEntityCoords(company.vehicle), GetEntityCoords(PlayerPedId()))
-                if distance > 100 then
-                    company.driveAway = false
-                    Reset()
+                    
+                    if vdistance < company.spotRadius then
+                        company.driverIsInVehicle = false
+                        if company.job == "mechanic" then
+                            local engine = GetWorldPositionOfEntityBone(company.damage_vehicle, GetEntityBoneIndexByName(company.damage_vehicle, "engine"))
+                            TaskGoToCoordAnyMeans(company.driver, engine, 1.0, 0, 0, company.walkStyle, 0xbf800000)
+                            ddistance = GetDistance(vector3(engine.x, engine.y, engine.z), GetEntityCoords(company.driver))
+                        else
+                            if company.job == "police" or company.job == "ambulance" then
+                                if company.job == "police" then FreezeEntityPosition(PlayerPedId(), true) end
+                                TaskGoToCoordAnyMeans(company.driver, coords, 2.0, 0, 0, company.walkStyle, 0xbf800000)
+                            else
+                                TaskGoToCoordAnyMeans(company.driver, coords, 1.0, 0, 0, company.walkStyle, 0xbf800000)
+                            end
+                        end
+                        if company.job == 'police' or company.job == 'ambulance' then SetVehicleSiren(company.vehicle, false) end
+                        if ddistance < Config.InteractDiustance then
+                            ClearPedTasks(company.driver)
+                            RemoveBlip(company.blip)
+                            company.driveToPlayer = false
+                            company.isDriving = false
+                            if company.job == 'police' then
+                                SetFakeWantedLevel(0)
+                                if not company.isEscorted then WalkToVehicle() end
+                            elseif company.job == 'ambulance' then
+                                if QBCore.Functions.GetPlayerData().metadata['isdead'] or QBCore.Functions.GetPlayerData().metadata['inlaststand'] then
+                                    if not company.isEscorted then WalkToVehicle() end
+                                else
+                                    HelpOnLocation()
+                                end
+                            elseif company.job == 'mechanic' then
+                                if GetVehicleEngineHealth(company.damage_vehicle) < Config.MinDamageForFlatbed then
+                                    GoToMechanicShop()
+                                else
+                                    HelpOnLocation()
+                                end
+                            elseif company.job == 'taxi' then
+                                company.isWaiting = true
+                            elseif company.job == 'limousine' then
+                                company.isWaiting = true
+                            end
+                        end
+                    end
+                elseif company.isReadyToGo then
+                    if not IsPedInVehicle(PlayerPedId(), company.vehicle, false) then TempDisableControl() end
+                    SetVehicleDoorsLocked(company.vehicle, 0)
+                    if IsPedInVehicle(company.driver, company.vehicle, false) and IsPedInVehicle(PlayerPedId(), company.vehicle, false) then
+                        company.isReadyToGo = false
+                        if company.job == 'taxi' or company.job == 'limousine' then GoToLocation() end
+                        if company.job == 'mechanic' then
+                            DriveToLocation(GetEntityCoords(company.vehicle), company.home)
+                            company.driveToMechanic = true
+                        end
+                    end
+                elseif company.isEscorted then
+                    local distance = GetDistance(GetEntityCoords(company.driver), GetEntityCoords(company.vehicle))
+                    if company.job == "police" then
+                        loadAnimDict("mp_arresting")
+                        TaskPlayAnim(PlayerPedId(), "mp_arresting", "idle", 8.0, -8, -1, 16, 0, 0, 0, 0)
+                    end
+                    if distance <= 5 then
+                        company.isEscorted = false
+                        company.coords = company.home
+                        DoScreenFadeOut(500)
+                        Wait(700)
+                        DetachEntity(PlayerPedId(), true, false)
+                        TaskWarpPedIntoVehicle(PlayerPedId(), company.vehicle, company.passengerSeat)
+                        TaskWarpPedIntoVehicle(company.driver, company.vehicle, -1)
+                        Wait(1000)
+                        DoScreenFadeIn(500)
+                        company.driveToCompany = true
+                        DriveToLocation(GetEntityCoords(company.vehicle), company.home)
+                    end
+                elseif company.driveToCompany then
+                    local distance = GetDistance(GetEntityCoords(company.vehicle), company.home)
+                    lastCoords = GetEntityCoords(company.vehicle)
+                    if Config.ForceFirstperson then SetFollowVehicleCamViewMode(4) end
+                    if distance <= 5 then
+                        company.driveToCompany = false
+                        company.isDriving = false
+                        BringVehicleToHalt(company.vehicle, 5.0, 1000, true)
+                        Wait(1100)
+                        ClearPedTasks(company.driver)
+                        SetVehicleSiren(company.vehicle, false)
+                        DoScreenFadeOut(500)
+                        Wait(600)
+                        if Config.ForceFirstperson then SetFollowVehicleCamViewMode(followPedCamMode) end
+                        SetEntityCoords(PlayerPedId(), vector3(company.checkin.x, company.checkin.y, company.checkin.z), false, false, false, true)
+                        if company.job == "police" then
+                            if Config.UseAutoJail then
+                                isInJail = true
+                                jailTime = math.random(Config.MinJailTime, Config.MaxJailTime)
+                            end
+                            FreezeEntityPosition(PlayerPedId(), false)
+                            company.isHandcuffed = false
+                        end
+    
+                        if company.job == "ambulance" then FreezeEntityPosition(PlayerPedId(), false) end
+                        Wait(1000)
+                        DoScreenFadeIn(500)
+                        Wait(500)
+                        LeaveTarget()                    
+                    end
+                elseif company.driveToMechanic then
+                    local distance = GetDistance(GetEntityCoords(company.vehicle), company.home)
+                    lastCoords = GetEntityCoords(company.vehicle)
+                    if Config.ForceFirstperson then SetFollowVehicleCamViewMode(4) end
+                    if distance <= 5 then
+                        company.driveToMechanic = false
+                        company.isDriving = false
+                        BringVehicleToHalt(company.vehicle, 5.0, 1000, true)
+                        ClearPedTasks(company.driver)
+                        TaskLeaveVehicle(PlayerPedId(), company.vehicle, 1)
+                        TriggerServerEvent('mh-npcservices:server:pay', company.job, company.price)
+                        if Config.ForceFirstperson then SetFollowVehicleCamViewMode(followPedCamMode) end
+                        Wait(3000)
+                        DetachEntity(company.damage_vehicle, false, false)
+                        Wait(100)
+                        SetEntityCoords(company.damage_vehicle, vector3(company.vehicleDrop.x, company.vehicleDrop.y, company.vehicleDrop.z), false, false, false, true)
+                        Wait(2000)
+                        LeaveTarget()
+                    end
+                elseif company.driveToLocation then
+                    local distance = GetDistance(GetEntityCoords(company.vehicle), company.coords)
+                    if Config.ForceFirstperson then SetFollowVehicleCamViewMode(4) end
+                    lastCoords = GetEntityCoords(company.vehicle)
+                    if distance <= 5 or not DoesBlipExist(GetFirstBlipInfoId(8)) then
+                        company.driveToLocation = false
+                        company.isDriving = false
+                        BringVehicleToHalt(company.vehicle, 5.0, 1000, true)
+                        Wait(1100)
+                        ClearPedTasks(company.driver)
+                        TriggerServerEvent('mh-npcservices:server:pay', company.job, company.price)
+                        PlayAmbientSpeech1(company.driver, "TAXID_CLOSE_AS_POSS", "SPEECH_PARAMS_FORCE_NORMAL")
+                        Wait(100)
+                        if Config.ForceFirstperson then SetFollowVehicleCamViewMode(followPedCamMode) end
+                        TriggerServerEvent('mh-npcservices:server:leavevehicle', company.vehicle)
+                        Wait(3100)
+                        LeaveTarget()
+                    end
+                elseif company.driveAway then
+                    lastCoords = GetEntityCoords(company.vehicle)
+                    local distance = GetDistance(GetEntityCoords(company.vehicle), GetEntityCoords(PlayerPedId()))
+                    if distance > 100 then
+                        company.driveAway = false
+                        Reset()
+                    end
                 end
             end
         end
