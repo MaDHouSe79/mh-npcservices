@@ -62,11 +62,9 @@
 - if you have paid for this script, you have been scammed, this script is free to everyone.
 - not encrypted, not ip blocked.
 
-### 🐞 Any bugs, let my know. 👊😎
 
-### 🙈 Youtube & Discord
+### 🙈 Youtube
 - [Youtube](https://www.youtube.com/@MaDHouSe79)
-- [Discord](https://discord.gg/cEMSeE9dgS)
 
 # LICENSE
 [GPL LICENSE](./LICENSE)<br />
