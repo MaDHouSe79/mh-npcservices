@@ -47,7 +47,7 @@ local function loadModel(model)
 end
 
 local function CallAnimation(job)
-    if not QBCore.Functions.GetPlayerData().metadata['isdead'] then
+    if not QBCore.Functions.GetPlayerData().metadata['isdead'] and not company.isCalled then
         local dictionary = Config.CallAnimation.call.dictionary
         local animation = Config.CallAnimation.call.animation
         if not QBCore.Functions.GetPlayerData().job.name == "taxi" or not QBCore.Functions.GetPlayerData().job.name ==
