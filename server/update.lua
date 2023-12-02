@@ -1,11 +1,7 @@
 --[[ ===================================================== ]]--
 --[[           MH NPC Services Script by MaDHouSe          ]]--
 --[[ ===================================================== ]]--
-
-local user = "MaDHouSe79"
-local script = "mh-npcservices"
-
-local resourceName = nil
+local script = GetCurrentResourceName()
 
 local function checkVersion(err, responseText, headers)
     local curVersion = LoadResourceFile(script, "version")
@@ -28,6 +24,5 @@ local function checkVersion(err, responseText, headers)
 end
 
 Citizen.CreateThread( function()
-   resourceName = ""..GetCurrentResourceName()..""
-   PerformHttpRequest("https://raw.githubusercontent.com".."/"..user.."/"..script.."/master/version", checkVersion, "GET")
+    PerformHttpRequest("https://raw.githubusercontent.com".."/MaDHouSe79/"..script.."/master/version", checkVersion, "GET")
 end)
