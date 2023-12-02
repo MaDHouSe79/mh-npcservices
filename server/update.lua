@@ -8,23 +8,22 @@ local script = "mh-npcservices"
 local resourceName = nil
 
 local function checkVersion(err, responseText, headers)
-    curVersion = LoadResourceFile(GetCurrentResourceName(), "version")
+    local curVersion = LoadResourceFile(script, "version")
+    local version = string.gsub(curVersion, "%s+", "")
     if responseText == nil then
-        print("^1"..resourceName.." check for updates failed ^7")
+        print("[^1"..script.."^7] Check for script update ^1FAILED^7")
         return
     end
-    if curVersion ~= responseText and tonumber(curVersion) < tonumber(responseText) then
-        updateavail = true
-        print("\n^1----------------------------------------------------------------------------------^7")
-        print(resourceName.." is outdated, latest version is: ^2"..responseText.."^7, installed version: ^1"..curVersion.."^7!\nupdate from https://github.com"..updatePath.."")
+    if version ~= responseText and tonumber(version) < tonumber(responseText) then
         print("^1----------------------------------------------------------------------------------^7")
-    elseif tonumber(curVersion) > tonumber(responseText) then
-        print("\n^3----------------------------------------------------------------------------------^7")
-        print(resourceName.." git version is: ^2"..responseText.."^7, installed version: ^1"..curVersion.."^7!")
-		print("READ THE UPDATES.md to see if you have to make any changes!!")
+        print("[^3"..script.."^7] is outdated, latest version is: ^2"..responseText.."^7, installed version: ^1"..version.."^7!\nupdate from https://github.com/MaDHouSe79/"..script.."")
+        print("^1----------------------------------------------------------------------------------^7")
+    elseif tonumber(version) > tonumber(responseText) then
+        print("^3----------------------------------------------------------------------------------^7")
+        print("[^3"..script.."^7] git version is: ^2"..responseText.."^7, installed version: ^1"..version.."^7!")
         print("^3----------------------------------------------------------------------------------^7")
     else
-        print("\n"..resourceName.." is up to date. (^2"..curVersion.."^7)")
+        print("[^2"..script.."^7] is up to date (^2"..version.."^7) ")
     end
 end
 
