@@ -26,6 +26,9 @@
   <img alig src="https://github-profile-trophy.vercel.app/?username=MaDHouSe79&margin-w=15&column=6" />
 </p>
 
+# My Youtube Channel and Discord
+- [Subscribe](https://www.youtube.com/c/@MaDHouSe79) 
+- [Discord](https://discord.gg/vJ9EukCmJQ)
 
 # MH-NpcServices (BETA)
 
@@ -62,9 +65,6 @@
 - if you have paid for this script, you have been scammed, this script is free to everyone.
 - not encrypted, not ip blocked.
 
-
-### 🙈 Youtube
-- [Youtube](https://www.youtube.com/@MaDHouSe79)
 
 # LICENSE
 [GPL LICENSE](./LICENSE)<br />
