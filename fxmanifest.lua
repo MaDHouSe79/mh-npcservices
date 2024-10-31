@@ -7,7 +7,7 @@ game 'gta5'
 
 description 'MH - NPC Services - a 6 in 1 npc services. NPC (Police/Ambulance/Mechanic/TowTruck/Taxi/Limo)'
 author 'MaDHouSe'
-version '1.0'
+version '1.0.0'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',
