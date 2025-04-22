@@ -13,9 +13,7 @@ local function comma_value(amount)
     local formatted = tostring(amount)
     while true do
         formatted, k = string.gsub(formatted, '^(-?%d+)(%d%d%d)', '%1,%2')
-        if (k==0) then
-            break
-        end
+        if (k==0) then break end
     end
     return formatted
 end
@@ -79,19 +77,6 @@ QBCore.Functions.CreateCallback("mh-npcservices:server:CanIPayTheBill", function
     cb(CanIPayTheBill(src, company, price))
 end)
 
-QBCore.Functions.CreateCallback('mh-npcservices:server:IsVehicleOwner', function(source, cb, plate)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local citizenid = Player.PlayerData.citizenid
-    MySQL.Async.fetchAll('SELECT * FROM player_vehicles WHERE plate = ? AND citizenid = ?', {plate, citizenid}, function(result)
-		if result[1] ~= nil then
-		    cb(true)
-		else
-			cb(false)
-		end
-	end)
-end)
-
 RegisterServerEvent('mh-npcservices:server:sendService', function(callData)
     local src = source
     local num = nil
@@ -134,13 +119,13 @@ RegisterServerEvent('mh-npcservices:server:leavevehicle', function(vehicle)
             if passengers[i].passenger ~= nil then 
                 local Player = QBCore.Functions.GetPlayer(passengers[i].passenger)
                 if Player then
-                    local fullname = Player.PlayerData.charinfo.firstname ..' '.. Player.PlayerData.charinfo.lastname
                     TriggerClientEvent('mh-npcservices:client:leavevehicle', passengers[i].passenger)
-                    TriggerClientEvent('QBCore:Notify', passengers[i].passenger, Lang:t('notify.left_vehicle'), "success")
+                    QBCore.Functions.Notify(passengers[i].passenger, passengers[i].passenger, Lang:t('notify.left_vehicle'), "success")
                     passengers[i].passenger = nil
                 end
             end
         end
+        Wait(50)
     end
 end)
 
