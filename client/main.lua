@@ -295,6 +295,7 @@ local function HelpOnLocation()
                     TaskPlayAnim(company.driver, "mini@cpr@char_a@cpr_str", "cpr_pumpchest", 1.0, 1.0, -1, 9, 1.0, 0, 0, 0)
                 end
                 if company.job == "mechanic" then
+                    PlayAmbientSpeech1(company.driver, "CHALLENGE_ACCEPTED_GENERIC", "SPEECH_PARAMS_FORCE_NORMAL")
                     SetVehicleUndriveable(company.damage_vehicle, true)
                     SetVehicleDoorOpen(company.damage_vehicle, 4, false, false)
                     TaskTurnPedToFaceCoord(company.driver, GetEntityCoords(company.damage_vehicle), -1)
