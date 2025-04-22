@@ -522,9 +522,7 @@ AddEventHandler('onResourceStart', function(resource)
 end)
 
 RegisterNetEvent('mh-npcservices:client:sendService', function(callData)
-    if isInJail then
-        return
-    end
+    if isInJail then return end
     if #company == 0 and not company.isCalled then
         CallAnimation(callData.job)
         SetCompanyData(callData.job)
@@ -532,24 +530,13 @@ RegisterNetEvent('mh-npcservices:client:sendService', function(callData)
         company.price = callData.price
         if callData.job == "mechanic" then
             local vehicle, _ = QBCore.Functions.GetClosestVehicle(GetEntityCoords(PlayerPedId()))
-            local props = QBCore.Functions.GetVehicleProperties(vehicle)
-            QBCore.Functions.TriggerCallback('mh-npcservices:server:IsVehicleOwner', function(owned)
-                if owned then
-                    company.coords = GetEntityCoords(vehicle)
-                    company.damage_vehicle = vehicle
-                    QBCore.Functions.Notify(Lang:t('notify.call_company', {
-                        company = company.name
-                    }), "success", 8000)
-                    Wait(8500)
-                    CallServices()
-                else
-                    QBCore.Functions.Notify(Lang:t('error.not_the_owner'), "error")
-                end
-            end, props.plate)
+            company.coords = GetEntityCoords(vehicle)
+            company.damage_vehicle = vehicle
+            QBCore.Functions.Notify(Lang:t('notify.call_company', {company = company.name}), "success", 8000)
+            Wait(8500)
+            CallServices()
         else
-            QBCore.Functions.Notify(Lang:t('notify.call_company', {
-                company = company.name
-            }), "success", 8000)
+            QBCore.Functions.Notify(Lang:t('notify.call_company', {company = company.name}), "success", 8000)
             Wait(8500)
             CallServices()
         end
