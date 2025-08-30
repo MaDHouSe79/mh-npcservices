@@ -26,9 +26,8 @@
   <img alig src="https://github-profile-trophy.vercel.app/?username=MaDHouSe79&margin-w=15&column=6" />
 </p>
 
-# My Youtube Channel and Discord
+# My Youtube Channel
 - [Subscribe](https://www.youtube.com/c/@MaDHouSe79) 
-- [Discord](https://discord.gg/vJ9EukCmJQ)
 
 # MH-NpcServices (BETA)
 
@@ -69,3 +68,4 @@
 # LICENSE
 [GPL LICENSE](./LICENSE)<br />
 &copy; [MaDHouSe79](https://www.youtube.com/@MaDHouSe79)
+
