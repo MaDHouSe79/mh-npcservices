@@ -482,6 +482,16 @@ local function WalkToVehicle()
     end
 end
 
+local function CallEMS()
+    local call_data = {}
+    call_data.job = 'ambulance'
+    call_data.callerId = GetPlayerServerId(PlayerId())
+    call_data.price = Config.Service['ambulance'].price
+    call_data.targetId = GetPlayerServerId(PlayerId())
+    TriggerServerEvent('mh-npcservices:server:sendService', call_data)
+end
+exports("CallEMS", CallEMS)
+
 AddEventHandler('onResourceStart', function(resource)
     if resource == GetCurrentResourceName() then
         SetFakeWantedLevel(0)
